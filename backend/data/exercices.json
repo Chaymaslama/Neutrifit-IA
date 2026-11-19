@@ -1,0 +1,20 @@
+[
+  {"nom": "Squat au poids du corps", "niveau": "debutant", "materiel": "aucun", "groupe": "jambes"},
+  {"nom": "Squat avec haltère", "niveau": "debutant", "materiel": "halteres", "groupe": "jambes"},
+  {"nom": "Fentes alternées", "niveau": "debutant", "materiel": "aucun", "groupe": "jambes"},
+  {"nom": "Pont fessier", "niveau": "debutant", "materiel": "aucun", "groupe": "fessiers"},
+  {"nom": "Pompes sur les genoux", "niveau": "debutant", "materiel": "aucun", "groupe": "pectoraux"},
+  {"nom": "Développé couché avec haltères", "niveau": "debutant", "materiel": "halteres", "groupe": "pectoraux"},
+  {"nom": "Rowing haltère à un bras", "niveau": "debutant", "materiel": "halteres", "groupe": "dos"},
+  {"nom": "Rowing avec élastique", "niveau": "debutant", "materiel": "elastique", "groupe": "dos"},
+  {"nom": "Développé épaules avec haltères", "niveau": "debutant", "materiel": "halteres", "groupe": "epaules"},
+  {"nom": "Curl biceps avec haltères", "niveau": "debutant", "materiel": "halteres", "groupe": "bras"},
+  {"nom": "Gainage planche", "niveau": "debutant", "materiel": "aucun", "groupe": "abdominaux"},
+  {"nom": "Crunch", "niveau": "debutant", "materiel": "aucun", "groupe": "abdominaux"},
+  {"nom": "Pompes classiques", "niveau": "intermediaire", "materiel": "aucun", "groupe": "pectoraux"},
+  {"nom": "Squat bulgare", "niveau": "intermediaire", "materiel": "aucun", "groupe": "jambes"},
+  {"nom": "Soulevé de terre roumain avec haltères", "niveau": "intermediaire", "materiel": "halteres", "groupe": "jambes"},
+  {"nom": "Tractions assistées avec élastique", "niveau": "intermediaire", "materiel": "elastique", "groupe": "dos"},
+  {"nom": "Dips sur chaise", "niveau": "intermediaire", "materiel": "aucun", "groupe": "bras"},
+  {"nom": "Relevé de jambes", "niveau": "intermediaire", "materiel": "aucun", "groupe": "abdominaux"}
+]

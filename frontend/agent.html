@@ -1,0 +1,161 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NutriFit · Studio agent</title><style>
+  :root {
+    --vert: #1f7a4d; --vert-fonce: #155c39; --vert-clair: #e7f4ec;
+    --rouge: #b42318; --rouge-clair: #fdecea; --orange: #b54708; --orange-clair: #fff4e5;
+    --gris: #5b6470; --gris-clair: #eef1f4; --bord: #d9dee4; --fond: #f6f8fa; --texte: #1c2430;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         background: var(--fond); color: var(--texte); line-height: 1.5; }
+  header { background: var(--vert); color: #fff; padding: 18px 24px; }
+  header h1 { margin: 0; font-size: 1.5rem; }
+  header p { margin: 4px 0 0; opacity: .92; font-size: .95rem; }
+  main { max-width: 1240px; margin: 0 auto; padding: 20px; display: grid;
+         grid-template-columns: 330px 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 920px) { main { grid-template-columns: 1fr; } }
+  form, section { background: #fff; border: 1px solid var(--bord); border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+  form { position: sticky; top: 12px; margin-bottom: 0; }
+  @media (max-width: 920px) { form { position: static; } }
+  h2 { margin: 0 0 12px; font-size: 1.12rem; color: var(--vert-fonce); }
+  h3 { margin: 18px 0 8px; font-size: .98rem; }
+  .sous-titre { margin: -6px 0 12px; color: var(--gris); font-size: .88rem; }
+  label { display: block; font-size: .85rem; color: var(--gris); margin: 10px 0 3px; }
+  input, select, textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--bord);
+         border-radius: 8px; font: inherit; background: #fff; }
+  input:focus, select:focus, textarea:focus, button:focus-visible, summary:focus-visible
+    { outline: 2px solid var(--vert); outline-offset: 1px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cases { display: flex; flex-wrap: wrap; gap: 2px 14px; }
+  .cases label { display: inline-flex; align-items: center; gap: 5px; margin: 3px 0; color: var(--texte); font-size: .9rem; }
+  .cases input { width: auto; }
+  button { background: var(--vert); color: #fff; border: 0; border-radius: 8px; padding: 10px 16px;
+         font: inherit; font-weight: 600; cursor: pointer; }
+  button:hover:not(:disabled) { background: var(--vert-fonce); }
+  button:disabled { opacity: .55; cursor: wait; }
+  button.secondaire { background: #fff; color: var(--vert-fonce); border: 1px solid var(--vert); }
+  button.secondaire:hover:not(:disabled) { background: var(--vert-clair); }
+  form button[type=submit] { width: 100%; margin-top: 16px; }
+
+  /* état de génération */
+  #etat { margin: 12px 0 0; font-size: .9rem; min-height: 1.3em; }
+  #etat.erreur { color: var(--rouge); background: var(--rouge-clair); padding: 9px 11px; border-radius: 8px; }
+  #etat.charge { color: var(--gris); display: flex; gap: 10px; align-items: center; }
+  .spinner { width: 18px; height: 18px; border: 3px solid var(--vert-clair); border-top-color: var(--vert);
+         border-radius: 50%; animation: tourne .9s linear infinite; flex: none; }
+  @keyframes tourne { to { transform: rotate(360deg); } }
+  #resultat.occupe { opacity: .45; pointer-events: none; transition: opacity .2s; }
+  .vide { color: var(--gris); text-align: center; padding: 36px 12px; }
+  .vide .etapes-prevues { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
+  .vide .etapes-prevues span { background: var(--gris-clair); border-radius: 999px; padding: 4px 12px; font-size: .82rem; }
+
+  /* verdict */
+  .verdict { display: flex; gap: 14px; align-items: flex-start; border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+  .verdict.ok { background: var(--vert-clair); border: 1px solid #b9dfc8; }
+  .verdict.ko { background: var(--rouge-clair); border: 1px solid #f3b9b3; }
+  .verdict .icone { font-size: 1.6rem; line-height: 1; flex: none; }
+  .verdict h2 { margin: 0 0 4px; font-size: 1.2rem; }
+  .verdict.ok h2 { color: var(--vert-fonce); } .verdict.ko h2 { color: var(--rouge); }
+  .verdict p { margin: 2px 0; font-size: .92rem; }
+  .verdict ul { margin: 6px 0 0; padding-left: 20px; font-size: .9rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+  /* parcours de l'agent */
+  .parcours { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  @media (max-width: 760px) { .parcours { grid-template-columns: repeat(2, 1fr); } }
+  .etape { border: 1px solid var(--bord); border-radius: 10px; padding: 10px; font-size: .82rem; background: #fff; }
+  .etape .t { font-weight: 700; display: flex; gap: 6px; align-items: center; margin-bottom: 2px; }
+  .etape .d { color: var(--gris); font-size: .76rem; }
+  .etape .s { margin-top: 6px; font-size: .76rem; font-weight: 600; }
+  .etape.ok { border-color: #b9dfc8; background: #f4fbf7; } .etape.ok .s { color: var(--vert); }
+  .etape.ko { border-color: #f3b9b3; background: #fff6f5; } .etape.ko .s { color: var(--rouge); }
+  .etape.todo { background: var(--gris-clair); border-style: dashed; } .etape.todo .t, .etape.todo .s { color: var(--gris); }
+  .pastille { width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+         font-size: .72rem; color: #fff; flex: none; }
+  .ok .pastille { background: var(--vert); } .ko .pastille { background: var(--rouge); } .todo .pastille { background: #aab2bd; }
+
+  /* contrôles */
+  .controle { display: grid; grid-template-columns: 150px 1fr auto; gap: 10px; align-items: center; padding: 9px 0;
+         border-bottom: 1px solid var(--gris-clair); font-size: .9rem; }
+  .controle:last-child { border-bottom: 0; }
+  @media (max-width: 640px) { .controle { grid-template-columns: 1fr; gap: 4px; } }
+  .controle .nom { font-weight: 600; }
+  .controle .valeur small { display: block; color: var(--gris); font-size: .78rem; }
+  .bar { position: relative; height: 8px; background: var(--gris-clair); border-radius: 999px; margin-top: 5px; overflow: visible; }
+  .bar .remplissage { height: 100%; border-radius: 999px; background: var(--vert); }
+  .bar.ko .remplissage { background: var(--rouge); }
+  .bar .cible { position: absolute; top: -3px; width: 2px; height: 14px; background: var(--texte); border-radius: 1px; }
+  .verdict-mini { font-weight: 700; font-size: .82rem; white-space: nowrap; }
+  .verdict-mini.ok { color: var(--vert); } .verdict-mini.ko { color: var(--rouge); }
+
+  /* tableaux */
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--bord); }
+  thead th { color: var(--gris); font-weight: 600; font-size: .8rem; background: var(--fond); }
+  th.repas { background: var(--vert-clair); color: var(--vert-fonce); font-size: .85rem; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  tr.total td { font-weight: 700; border-top: 2px solid var(--bord); background: var(--fond); }
+  .defile { overflow-x: auto; }
+
+  /* texte de l'agent */
+  .texte { background: var(--fond); border-radius: 10px; padding: 14px 16px; }
+  .texte h4 { margin: 14px 0 6px; font-size: 1rem; color: var(--vert-fonce); }
+  .texte h4:first-child { margin-top: 0; }
+  .texte p { margin: 6px 0; }
+  .texte ul, .texte ol { margin: 6px 0; padding-left: 22px; }
+  .texte table { margin: 8px 0; background: #fff; }
+  .texte .vide-texte { color: var(--gris); font-style: italic; }
+  ul.exos { columns: 2; margin: 6px 0; padding-left: 18px; font-size: .9rem; }
+  @media (max-width: 640px) { ul.exos { columns: 1; } }
+  .avert { font-size: .82rem; color: var(--orange); background: var(--orange-clair); border-radius: 8px; padding: 9px 12px; margin-top: 12px; }
+
+  /* affiner */
+  .affiner { display: flex; gap: 10px; align-items: flex-end; }
+  .affiner > div { flex: 1; }
+  .affiner button { white-space: nowrap; }
+  @media (max-width: 640px) { .affiner { flex-direction: column; align-items: stretch; } }
+
+  /* journal */
+  .step { border: 1px solid var(--bord); border-radius: 10px; margin: 8px 0; background: #fff; overflow: hidden; }
+  .step > summary { cursor: pointer; padding: 10px 12px; display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; list-style: none; }
+  .step > summary::-webkit-details-marker { display: none; }
+  .step .n { background: var(--vert-clair); color: var(--vert-fonce); font-weight: 700; border-radius: 999px; width: 26px; height: 26px;
+         display: inline-flex; align-items: center; justify-content: center; font-size: .8rem; }
+  .step .titre { font-weight: 600; font-size: .92rem; }
+  .step .titre code { font-weight: 400; color: var(--gris); font-size: .76rem; margin-left: 6px; }
+  .step .resume { color: var(--gris); font-size: .84rem; }
+  .step .badge { font-size: .76rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .badge.ok { background: var(--vert-clair); color: var(--vert-fonce); }
+  .badge.ko { background: var(--rouge-clair); color: var(--rouge); }
+  .badge.info { background: var(--gris-clair); color: var(--gris); }
+  .step.refuse { border-color: #f3b9b3; }
+  .step .corps { padding: 4px 14px 14px 48px; font-size: .88rem; border-top: 1px solid var(--gris-clair); }
+  .step .corps ul { margin: 6px 0; padding-left: 18px; }
+  .step .corps .problemes { color: var(--rouge); }
+  .groupe { margin: 8px 0; }
+  .groupe b { font-size: .8rem; color: var(--gris); text-transform: capitalize; display: block; margin-bottom: 3px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chips span { background: var(--gris-clair); border-radius: 999px; padding: 2px 9px; font-size: .78rem; }
+  details.technique { margin-top: 10px; }
+  details.technique > summary { cursor: pointer; font-size: .8rem; color: var(--gris); }
+  pre { margin: 6px 0 0; padding: 10px; background: #0f1720; color: #d6e2ee; overflow: auto; font-size: .76rem; border-radius: 8px; max-height: 240px; }
+
+  @media print {
+    header, form, .no-print, .affiner-section, .journal-section { display: none !important; }
+    main { display: block; padding: 0; } section { break-inside: avoid; border: 0; padding: 0 0 10px; }
+    body { background: #fff; }
+  }
+
+  :root { --vert:#167451; --vert-fonce:#103e32; --fond:#f0f5f1; --bord:#dce7df; --texte:#17332c; }
+  body { background: radial-gradient(ellipse at top right,#dcefe0,transparent 55%),var(--fond); }
+  header { background:linear-gradient(115deg,#103e32,#17694d); padding:38px max(24px,calc((100vw - 1200px)/2)); position:relative; }
+  header h1 { font-size:2.5rem; letter-spacing:-.06em; } header p { max-width:650px; }
+  .eyebrow { font-size:.72rem; letter-spacing:.18em; font-weight:700; color:#bdebcf; }
+  main { max-width:1280px; grid-template-columns:350px minmax(0,1fr); gap:24px; padding:28px 20px; }
+  form,section { border-radius:20px; padding:22px; box-shadow:0 8px 28px #153e3210; }
+  form { position:static; } input,select,textarea { border-radius:10px; padding:10px; } button { border-radius:12px; }
+  .hero { background:#fff; border:1px solid var(--bord); border-radius:20px; padding:24px; margin-bottom:16px; }
+  .hero h2 { font-size:1.55rem; letter-spacing:-.035em; } .hero p { color:var(--gris); }
+  .mode { display:inline-block; background:#e7f4ec; color:#155c39; padding:5px 12px; border-radius:20px; font-size:.8rem; font-weight:700; }
+  @media(max-width:920px){main{grid-template-columns:1fr;} header{padding:28px 20px;}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style><link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="studio4.css?v=4"><link rel="icon" href="assets/logo.svg" type="image/svg+xml"></head><body class="studio"><header class="topbar"><div class="eyebrow">NUTRIFIT / OBSERVABILITÉ</div><h1>NutriFit AI<span style="color:#a9e7b6">.</span></h1><p>Studio agent · exécutions et validation</p><nav><a href="/app/">Mon espace</a><a class="active" href="/app/agent.html">Studio agent</a></nav></header><main><aside><section><h2>Historique local</h2><p class="sous-titre">Plans sauvegardés sur ce serveur. Espace de démonstration sans authentification.</p><div id="history"></div></section></aside><div><div class="hero"><span class="mode">STUDIO / 01</span><h2>Comprendre chaque décision.</h2><p>Inspectez les appels, les refus et les corrections de l’agent. Le journal est disponible après la génération.</p><small id="mode-api">Vérification du service…</small></div><div id="resultat"><section class="vide">Générez un plan dans l’espace client ou choisissez un plan enregistré.</section></div></div></main><script src="agent.js"></script><script src="visual.js"></script><script src="studio4.js?v=4"></script></body></html>

@@ -1,0 +1,44 @@
+id,nom,categorie,kcal_100g,proteines_100g,glucides_100g,lipides_100g,prix_dt_kg,allergenes
+1,Riz blanc cuit,cereales,130,2.7,28,0.3,3.5,
+2,Pâtes cuites,cereales,158,5.8,31,0.9,3.0,gluten
+3,Couscous cuit,cereales,112,3.8,23,0.2,3.0,gluten
+4,Pain (baguette),cereales,270,9,55,1.5,1.5,gluten
+5,Flocons d’avoine,cereales,370,13,60,7,6.0,gluten
+6,Pommes de terre cuites,feculents,86,1.9,20,0.1,1.8,
+7,Pois chiches cuits,legumineuses,164,8.9,27,2.6,4.5,
+8,Lentilles cuites,legumineuses,116,9,20,0.4,4.0,
+9,Fèves cuites,legumineuses,110,7.6,19,0.4,3.5,
+10,Haricots blancs cuits,legumineuses,120,8,21,0.5,5.0,
+11,Tofu,legumineuses,144,17,3,9,15.0,soja
+12,Poulet blanc cuit,viandes,165,31,0,3.6,16.0,
+13,Dinde escalope cuite,viandes,135,30,0,1,18.0,
+14,Bœuf haché cuit,viandes,250,26,0,15,28.0,
+15,Agneau cuit,viandes,280,25,0,20,32.0,
+16,Œuf entier cuit,oeufs,143,12.6,0.7,9.5,8.0,oeufs
+17,Thon en conserve (nature),poissons,116,26,0,1,28.0,poisson
+18,Sardines cuites,poissons,208,25,0,11,9.0,poisson
+19,Daurade cuite,poissons,120,22,0,3,22.0,poisson
+20,Lait demi-écrémé,produits_laitiers,46,3.3,4.8,1.6,1.8,lait
+21,Yaourt nature,produits_laitiers,61,3.5,4.7,3.3,4.5,lait
+22,Fromage frais,produits_laitiers,98,11,3.4,4.3,12.0,lait
+23,Fromage à pâte dure,produits_laitiers,400,28,0,32,25.0,lait
+24,Huile d’olive,matieres_grasses,884,0,0,100,9.0,
+25,Tahini (pâte de sésame),matieres_grasses,595,17,21,54,28.0,sesame
+26,Tomate,legumes,18,0.9,3.9,0.2,1.5,
+27,Concombre,legumes,15,0.7,3.6,0.1,1.5,
+28,Carotte,legumes,41,0.9,10,0.2,1.5,
+29,Courgette,legumes,17,1.2,3.1,0.3,2.0,
+30,Poivron,legumes,31,1,6,0.3,2.5,
+31,Épinards cuits,legumes,23,3,3.6,0.3,3.0,
+32,Oignon,legumes,40,1.1,9,0.1,1.5,
+33,Aubergine,legumes,25,1,6,0.2,2.0,
+34,Pomme,fruits,52,0.3,14,0.2,3.0,
+35,Banane,fruits,89,1.1,23,0.3,4.5,
+36,Orange,fruits,47,0.9,12,0.1,2.0,
+37,Dattes,fruits,282,2.5,75,0.4,12.0,
+38,Amandes,fruits_secs,579,21,22,50,35.0,fruits_a_coque
+39,Cacahuètes,fruits_secs,567,26,16,49,12.0,arachides
+40,Lablabi,plats_tunisiens,115,5.5,16,3.5,5.0,gluten
+41,Ojja aux œufs,plats_tunisiens,150,8,5,11,9.0,oeufs
+42,Chakchouka,plats_tunisiens,85,5,6,5,5.0,oeufs
+43,Salade méchouia,plats_tunisiens,60,1.5,6,3.5,4.0,
